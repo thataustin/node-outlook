@@ -197,7 +197,7 @@ module.exports = {
           }
           else {
               if(typeof callback === 'function') {
-                  callback(null, response.body);
+                  callback(null, response.body, response);
               }
           }
       });
