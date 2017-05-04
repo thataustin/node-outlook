@@ -18,8 +18,6 @@ module.exports = {
       user: parameters.user
     };
 
-    console.log(`LOG: apiOptions.url, apiOptions.user`, apiOptions.url, apiOptions.user);
-
     if (parameters.odataParams !== undefined) {
       apiOptions['query'] = parameters.odataParams;
     }
