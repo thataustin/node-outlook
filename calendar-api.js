@@ -7,6 +7,42 @@ var utilities = require('./utilities.js');
  */
 
 module.exports = {
+
+  listCalendars: function (parameters, callback) {
+    var userSpec = utilities.getUserSegment(parameters);
+    var requestUrl = base.apiEndpoint() + userSpec + '/Calendars';
+
+    var apiOptions = {
+      url: requestUrl,
+      token: parameters.token,
+      user: parameters.user
+    };
+
+    console.log(`LOG: apiOptions.url, apiOptions.user`, apiOptions.url, apiOptions.user);
+
+    if (parameters.odataParams !== undefined) {
+      apiOptions['query'] = parameters.odataParams;
+    }
+
+    base.makeApiCall(apiOptions, function(error, response) {
+      if (error) {
+        if (typeof callback === 'function') {
+          callback(error, response);
+        }
+      }
+      else if (response.statusCode !== 200) {
+        if (typeof callback === 'function') {
+          callback('REST request returned ' + response.statusCode + '; body: ' + JSON.stringify(response.body), response);
+        }
+      }
+      else {
+        if (typeof callback === 'function') {
+          callback(null, response.body);
+        }
+      }
+    });
+  },
+
   /**
    * Used to get events from a calendar.
    *
